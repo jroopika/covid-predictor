@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COVID-19 Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>🩺 COVID-19 Risk Predictor</h2>
+        <form method="POST">
+            <label>🤒 Fever (0/1):</label>
+            <input type="number" name="fever" min="0" max="1" required>
+
+            <label>😴 Tiredness (0/1):</label>
+            <input type="number" name="tired" min="0" max="1" required>
+
+            <label>😮‍💨 Dry Cough (0/1):</label>
+            <input type="number" name="cough" min="0" max="1" required>
+
+            <label>😤 Difficulty in Breathing (0/1):</label>
+            <input type="number" name="breath" min="0" max="1" required>
+
+            <label>🗣️ Sore Throat (0/1):</label>
+            <input type="number" name="throat" min="0" max="1" required>
+
+            <label>🎂 Age:</label>
+            <input type="number" name="age" min="1" required>
+
+            <button type="submit">🎯 Check Risk</button>
+        </form>
+
+        {% if result %}
+        <div class="result-box">
+            {{ result }}
+        </div>
+        {% endif %}
+
+        {% if symptoms %}
+        <canvas id="pieChart" width="300" height="300"></canvas>
+        <script>
+            const ctx = document.getElementById("pieChart").getContext("2d");
+            const chart = new Chart(ctx, {
+                type: "pie",
+                data: {
+                    labels: {{ symptoms.keys()|list|tojson }},
+                    datasets: [{
+                        label: "Symptoms",
+                        data: {{ symptoms.values()|list|tojson }},
+                        backgroundColor: ["#ff7eb9", "#feb72b", "#6a67ce", "#57e2e5", "#f96fa2"],
+                        borderColor: "#fff",
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            position: "bottom"
+                        }
+                    }
+                }
+            });
+        </script>
+        {% endif %}
+        <a href="{{ url_for('dashboard') }}">📊 View Dashboard</a> | 
+        <a href="{{ url_for('logout') }}">🚪 Logout</a>
+    </div>
+</body>
+</html>

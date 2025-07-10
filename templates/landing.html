@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome | COVID-19 Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+    <link rel="icon" href="https://img.icons8.com/emoji/48/virus.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="hero">
+        <div class="content">
+            <h1>🦠 COVID-19 Risk Predictor</h1>
+            <p>Predict your risk of COVID-19 using AI!</p>
+
+            <canvas id="demoChart" width="300" height="300"></canvas>
+
+            <div class="buttons">
+                <a href="{{ url_for('login') }}" class="btn">Login</a>
+                <a href="{{ url_for('register') }}" class="btn secondary">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('demoChart').getContext('2d');
+        const demoChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Fever', 'Tiredness', 'Dry Cough', 'Breathing Issue', 'Sore Throat'],
+                datasets: [{
+                    label: 'Example Symptoms',
+                    data: [1, 0, 1, 1, 0],
+                    backgroundColor: [
+                        '#ff6384',
+                        '#36a2eb',
+                        '#ffcd56',
+                        '#4bc0c0',
+                        '#9966ff'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

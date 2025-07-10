@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>📊 Your Prediction History</h2>
+        {% if history %}
+        <table style="width:100%;margin-top:15px;border-collapse: collapse;">
+            <tr>
+                <th>Date</th>
+                <th>Fever</th>
+                <th>Tired</th>
+                <th>Cough</th>
+                <th>Breath</th>
+                <th>Throat</th>
+                <th>Age</th>
+                <th>Result</th>
+            </tr>
+            {% for row in history %}
+            <tr>
+                <td>{{ row.timestamp.strftime('%d %b %Y %I:%M %p') }}</td>
+                <td>{{ row.fever }}</td>
+                <td>{{ row.tired }}</td>
+                <td>{{ row.cough }}</td>
+                <td>{{ row.breath }}</td>
+                <td>{{ row.throat }}</td>
+                <td>{{ row.age }}</td>
+                <td>{{ row.result }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No predictions yet.</p>
+        {% endif %}
+        <br>
+        <a href="{{ url_for('predict') }}">🔙 Back to Prediction</a> | 
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</body>
+</html>
